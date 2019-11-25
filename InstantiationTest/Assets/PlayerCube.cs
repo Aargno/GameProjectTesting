@@ -28,9 +28,6 @@ public class PlayerCube : PlayerCubeBehavior
             // Assign the position of this cube to the position sent on the network
             transform.position = networkObject.position;
 
-            // Assign the rotation of this cube to the rotation sent on the network
-            transform.rotation = networkObject.rotation;
-
             // Stop the function here and don't run any more code in this function
             return;
         }
@@ -44,14 +41,8 @@ public class PlayerCube : PlayerCubeBehavior
         // Move the object by the given translation
         transform.position += translation;
 
-        // Just a random rotation on all axis
-        transform.Rotate(new Vector3(speed, speed, speed) * 0.25f);
-
         // Since we are the owner, tell the network the updated position
         networkObject.position = transform.position;
-
-        // Since we are the owner, tell the network the updated rotation
-        networkObject.rotation = transform.rotation;
 
         // Note: Forge Networking takes care of only sending the delta, so there
         // is no need for you to do that manually
