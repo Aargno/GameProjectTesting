@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -25,17 +26,26 @@ public class CubePlayerManager : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        int x;
+        Color32 col = GetComponent<MeshRenderer>().material.color;
+        int r = col.r;
+        int g = col.g;
+        int b = col.b;
+        int a = col.a;
+        int pack = ((((((0 ^ r) << 8) ^ g) << 8) ^ b) << 8) ^ a;
         if (stream.IsWriting)
         {
             // We own this player: send the others our data
-            stream.SendNext(1);
+            stream.SendNext(pack);
         }
         else
         {
             // Network player, receive data
-            x = (int)stream.ReceiveNext();
-            Debug.Log(x);
+            pack = (int)stream.ReceiveNext();
+            r = (pack >> 24)&0xFF;
+            g = (pack >> 16) & 0xFF;
+            b = (pack >> 8) & 0xFF;
+            a = pack & 0xFF;
+            GetComponent<MeshRenderer>().material.color = new Color32((Byte)r, (Byte)g, (Byte)b, (Byte)a);
         }
     }
 

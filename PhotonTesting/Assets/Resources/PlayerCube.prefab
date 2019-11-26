@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7735140881197846863}
   - component: {fileID: 1072611997}
   - component: {fileID: 1072612004}
+  - component: {fileID: 6052135776256095842}
   m_Layer: 0
   m_Name: PlayerCube
   m_TagString: Untagged
@@ -177,3 +178,17 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
+--- !u!114 &6052135776256095842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6885383085064693328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc410aff01ef4e6581be7419fb72eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  rotateSpeed: 360
