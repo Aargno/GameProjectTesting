@@ -42,9 +42,14 @@ public class Unit : MonoBehaviourPun
 
             if (Vector3.Distance(transform.position, map.TileCoordToWorldCoord(tileX, tileZ)) < 0.1f)
                 AdvancePathing();
-        }
 
-        transform.position = Vector3.Lerp(transform.position, map.TileCoordToWorldCoord(tileX, tileZ), 5f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, map.TileCoordToWorldCoord(tileX, tileZ), 5f * Time.deltaTime);
+
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, GameObject.Find("Map").GetComponent<TileMap>().TileCoordToWorldCoord(tileX, tileZ), 5f * Time.deltaTime);
+        }
         //transform.position = map.TileCoordToWorldCoord(tileX, tileZ);
         //GameObject newPar = map.NewLoc(tileX, tileZ);
         //this.transform.position = newPar.transform.position + new Vector3(0, 1, 0);
