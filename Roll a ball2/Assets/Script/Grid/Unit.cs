@@ -10,8 +10,8 @@ public class Unit : MonoBehaviourPun
     public TileMap map;
     public List<Node> currentPath = null;
 
-    int moveSpeed = 100;
-    float remainingMovement = 100;
+    int moveSpeed = 100000;
+    float remainingMovement = 100000;
     GameObject ImageTarg;
 
     private void Awake()
