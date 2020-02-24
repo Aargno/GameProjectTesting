@@ -48,6 +48,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region Event Codes
+    //THIS REGION NEEDS TO BE THE SAME ACROSS ALL SCRIPTS THAT USE EVENT HANDLING
+    //CURRENTLY: Launcher.cs, GameManager.cs in ARGRID and GameManager.cs in master client
+
+    const byte kickCode = 1;
+    const byte acceptPlayerCode = 2;
+    const byte moveCode = 3;
+    const byte msgCode = 4;
+
+    #endregion
+
     //#region RPC Methods
 
     //[PunRPC]
@@ -90,6 +101,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (value.getPres())
             {
                 //Debug.Log("Out2");
+                object[] content = new object[] { other.UserId, other.NickName };
+                RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+                SendOptions sendOptions = new SendOptions { Reliability = true };
+                PhotonNetwork.RaiseEvent(kickCode, content, raiseEventOptions, sendOptions);
                 PhotonNetwork.CloseConnection(other); //Boot player for using existing name
             }
             else
@@ -99,13 +114,12 @@ public class GameManager : MonoBehaviourPunCallbacks
                 //Debug.Log("3");
                 validPlayerCount++;
                 if (!other.NickName.Equals(myName)) turnOrder.Enqueue(other.NickName);
-                //Debug.Log(other.NickName);
+                Debug.Log(other.NickName);
 
-                byte evCode = 1; // Custom Event 1: Used as "MoveUnitsToTargetPosition" event
-                object[] content = new object[] { new Vector3(10.0f, 2.0f, 5.0f), 1, 2, 5, 10 }; // Array contains the target position and the IDs of the selected units
+                object[] content = new object[] { }; // Array contains the target position and the IDs of the selected units
                 RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
                 SendOptions sendOptions = new SendOptions { Reliability = true };
-                PhotonNetwork.RaiseEvent(evCode, content, raiseEventOptions, sendOptions);
+                PhotonNetwork.RaiseEvent(acceptPlayerCode, content, raiseEventOptions, sendOptions);
                 //GameObject temp;
                 //temp = PhotonNetwork.Instantiate(warrior.name, new Vector3(0,0,0), new Quaternion(0,0,0,0));
                 //players[other.NickName].setRpc(temp);
